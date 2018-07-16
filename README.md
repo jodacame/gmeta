@@ -1,5 +1,5 @@
 # GMeta
-A ridiculously lightweight metadata extractor for the given url
+A ridiculously lightweight metadata extractor for the given url or html
 
 [![NPM](https://nodei.co/npm/gmeta.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gmeta/)
 
@@ -9,7 +9,7 @@ A ridiculously lightweight metadata extractor for the given url
 npm install gmeta --save
 ````
 
-## Usage
+## Usage from URL
 ```` javascript
 const gmeta = require('gmeta');
 
@@ -17,8 +17,16 @@ gmeta(url,function(err,data){
     console.log(data);
 });
 ````
+## Usage from HTML
+```` javascript
+const gmeta = require('gmeta');
 
-## Example
+gmeta(html,function(err,data){
+    console.log(data);
+},true);
+````
+
+## Example #1
 
 ```` javascript
 const gmeta = require('gmeta');
@@ -43,19 +51,43 @@ gmeta('https://github.com',function(err,data){
 });
 ````
 
+## Example #2
+
+```` javascript
+const gmeta = require('gmeta');
+
+let html = '<title>GitHub</title><meta name="description" content="GitHub is where people build software. More than 28 million people use GitHub to discover, fork, and contribute to over 85 million projects.">';
+
+gmeta(html,function(err,data){
+    console.log(data);
+    /* output =>
+    { description: 'GitHub is where people build software. More than 28 million people use GitHub to discover, fork, and contribute to over 85million projects.',
+    title: 'GitHub' }
+    */
+},true);
+````
+
 ## API
 Are you serious?, Ok ;) , here definition =>
 
-### gmeta(url, function(err, obj) {...});
-    
+### gmeta(source, function(err, obj) {...},isHTML);
+
+**source (String):** URL or HTML
+
+**callback (Function):** Callback (err,obj)
+
+**isHTML (Boolean [defaut:false]):** if source is a HTML you need set it true
+
 ## Data Supported
 
 * title
 * description
 * keywords
 * lang
+* manifest
 * canonical
 * icon 
+* fluid-icon
 * copyright
 * language
 * robots
@@ -115,3 +147,5 @@ Are you serious?, Ok ;) , here definition =>
 * og:description
 * og:image
 * charset
+* hostname
+* google-analytics

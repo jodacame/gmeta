@@ -55,7 +55,9 @@ module.exports = [
             'geo.region',
             'geo.position',
             'icbm',
-            'thumbnail'
+            'thumbnail',
+            'google-analytics',
+            'hostname'
         ]
     },
     {
@@ -85,7 +87,9 @@ module.exports = [
         pattern: '<link.*?rel="{{KEY}}".*?href="(.*?)".*?>|<link.*?href="(.*?)".*?rel="{{KEY}}".*?>',
         KEYS:[
             'icon',
-            'canonical'
+            'canonical',
+            'manifest',
+            'fluid-icon'
         ]
     }
 ]
