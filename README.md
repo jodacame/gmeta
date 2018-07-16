@@ -1,6 +1,9 @@
 # GMeta
 A ridiculously lightweight metadata extractor for the given url
 
+[![NPM](https://nodei.co/npm/gmeta.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gmeta/)
+
+
 ## Installation
 ````
 npm install gmeta --save
