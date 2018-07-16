@@ -1,0 +1,34 @@
+{
+  "name": "gmeta",
+  "version": "1.0.0",
+  "description": "A ridiculously lightweight metadata extractor for the given url",
+  "main": "gmeta.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jodacame/gmeta.git"
+  },
+  "keywords": [
+    "meta",
+    "metadata",
+    "metatags",
+    "html",
+    "body",
+    "opengraph",
+    "twittercard",
+    "tags",
+    "request",
+    "header"
+  ],
+  "author": "Jodacame (https://github.com/jodacame/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jodacame/gmeta/issues"
+  },
+  "homepage": "https://github.com/jodacame/gmeta#readme",
+  "dependencies": {
+    "request": "^2.87.0"
+  }
+}
