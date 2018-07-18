@@ -1,5 +1,13 @@
 module.exports = [
     {
+        pattern: '<{{KEY}}>(.*?)</{{KEY}}>',
+        KEYS: ['title']
+    },
+    {
+        pattern: '<{{KEY}}.*?>(.*?)</{{KEY}}>',
+        KEYS: ['title']
+    },
+    {
         pattern:'<meta.*?name="{{KEY}}".*?content="(.*?)".*?>|<meta.*?content="(.*?)".*?name="{{KEY}}".*?>',
         KEYS: [
             'description', 
@@ -72,12 +80,8 @@ module.exports = [
         ]
     },
     {
-        pattern: '<meta.*?{{KEY }}="(.*?)".*?>',
+        pattern: '<meta.*?{{KEY}}="(.*?)".*?>',
         KEYS:['charset']
-    },
-    {
-        pattern: '<{{KEY}}>(.*?)</{{KEY}}>',
-        KEYS:['title']
     },
     {
         pattern: '<html.*?{{KEY}}="(.*?)".*?>',

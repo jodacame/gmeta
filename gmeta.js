@@ -4,6 +4,8 @@ const request = require("request");
 const _pattern = require("./patterns");
 
 var gmeta = function(url,callback,isHTML){
+    if (!url || url == undefined || url == 'undefined')
+        url = '';
     let meta = {};
     if (!isHTML || isHTML === false){
         request.get({
