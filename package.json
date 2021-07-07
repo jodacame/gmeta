@@ -1,6 +1,6 @@
 {
   "name": "gmeta",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A ridiculously lightweight metadata extractor for the given url",
   "main": "gmeta.js",
   "scripts": {
