@@ -13,17 +13,28 @@ npm install gmeta --save
 ```` javascript
 const gmeta = require('gmeta');
 
+// Using callback
 gmeta(url,function(err,data){
     console.log(data);
 });
+
+// Using Promise (Async/Await) 
+const response = await gmeta(url);
+console.log(response);
+
 ````
 ## Usage from HTML
 ```` javascript
 const gmeta = require('gmeta');
 
+// Using Callback
 gmeta(html,function(err,data){
     console.log(data);
 },true);
+
+// Using Promise (Async/Await) 
+const response = await gmeta(html,true);
+console.log(response);
 ````
 
 ## Example #1
@@ -31,10 +42,11 @@ gmeta(html,function(err,data){
 ```` javascript
 const gmeta = require('gmeta');
 
-gmeta('https://github.com',function(err,data){
-    console.log(data);
-    /* output =>
-    { description: 'GitHub brings together the world’s largest community of developers to discover, share, and build better software. From open source projects to private team repositories, we’re your all-in-one platform for collaborative development.',
+const response = await gmeta('https://github.com');
+console.log(response);
+/* output =>
+{ 
+    description: 'GitHub brings together the world’s largest community of developers to discover, share, and build better software. From open source projects to private team repositories, we’re your all-in-one platform for collaborative development.',
     viewport: 'width=device-width',
     'google-site-verification': 'KT5gs8h0wvaagLKAVWq8bbeNwnZZK1r1XQysX3xurLU',
     'theme-color': '#1e2327',
@@ -46,8 +58,9 @@ gmeta('https://github.com',function(err,data){
     title: 'The world’s leading software development platform · GitHub',
     lang: 'en',
     icon: 'https://assets-cdn.github.com/favicon.ico',
-    canonical: 'https://github.com/' }
-    */
+    canonical: 'https://github.com/' 
+}
+*/
 });
 ````
 
@@ -68,15 +81,19 @@ gmeta(html,function(err,data){
 ````
 
 ## API
-Are you serious?, Ok ;) , here definition =>
-
-### gmeta(source, function(err, obj) {...},isHTML);
+### gmeta(source, function(err, obj) {...},isHTML); - Callback Way
 
 **source (String):** URL or HTML
 
 **callback (Function):** Callback (err,obj)
 
-**isHTML (Boolean [defaut:false]):** if source is a HTML you need set it true
+**isHTML Optional (Boolean [defaut:false]):** if source is a HTML you need set it true
+
+### gmeta(source,isHTML); - Promise Way
+
+**source (String):** URL or HTML
+
+**isHTML Optional (Boolean [defaut:false]):** if source is a HTML you need set it true
 
 ## Data Supported
 
