@@ -12,13 +12,16 @@ var gmeta = function (url, callback, isHTML) {
     if (!isHTML || isHTML === false) {
       try {
         const response = await got(url, { timeout: 3000 });
+        let head = response.body.match(/<head[^>]*>[\s\S]*<\/head>/gi);
+        head = head[0] ? head[0] : response.body;
+
+        head = head.replace(/(<style[\w\W]+style>)/gi, "");
+        head = head.replace(/(<script[\w\W]+script>)/gi, "");
 
         _pattern.forEach((el) => {
           el.KEYS.forEach((key) => {
             let m = _prepare(
-              response.body.match(
-                new RegExp(el.pattern.split("{{KEY}}").join(key), "i")
-              )
+              head.match(new RegExp(el.pattern.split("{{KEY}}").join(key), "i"))
             );
             if (m) meta[key] = m;
           });
