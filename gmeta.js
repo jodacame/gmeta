@@ -1,54 +1,52 @@
-'use strict';
+"use strict";
 
-const request = require("request");
+const got = require("got");
+
 const _pattern = require("./patterns");
 
 var gmeta = function (url, callback, isHTML) {
-    return new Promise((resolve, reject) => {
-        if (!url || url == undefined || url == 'undefined')
-            url = '';
-        if (callback === true) isHTML = true
-        let meta = {};
-        if (!isHTML || isHTML === false) {
-            request.get({
-                url: url,
-                followAllRedirects: true,
-                headers: { 'User-Agent': 'GMeta/Generic (GMeta; https://www.npmjs.com/package/gmeta)' }
-            }, (err, res, response) => {
-                if (err) {
-                    if (typeof callback === 'function')
-                        callback(err, false);
-                    return reject(err)
-                } else {
-                    _pattern.forEach(el => {
-                        el.KEYS.forEach(key => {
-                            let m = _prepare(response.match(new RegExp(el.pattern.split("{{KEY}}").join(key), 'i')))
-                            if (m) meta[key] = m;
-                        })
-                    })
-                    if (typeof callback === 'function')
-                        callback(false, meta);
-                    return resolve(meta)
-                }
-            });
-        } else {
-            _pattern.forEach(el => {
-                el.KEYS.forEach(key => {
-                    let m = _prepare(url.match(new RegExp(el.pattern.split("{{KEY}}").join(key), 'i')))
-                    if (m) meta[key] = m;
-                })
-            })
-            if (typeof callback === 'function')
-                callback(false, meta);
-            return resolve(meta)
-        }
-    });
-}
+  return new Promise(async (resolve, reject) => {
+    if (!url || url == undefined || url == "undefined") url = "";
+    if (callback === true) isHTML = true;
+    let meta = {};
+    if (!isHTML || isHTML === false) {
+      try {
+        const response = await got(url, { timeout: 3000 });
 
-
+        _pattern.forEach((el) => {
+          el.KEYS.forEach((key) => {
+            let m = _prepare(
+              response.body.match(
+                new RegExp(el.pattern.split("{{KEY}}").join(key), "i")
+              )
+            );
+            if (m) meta[key] = m;
+          });
+        });
+        if (typeof callback === "function") callback(false, meta);
+        return resolve(meta);
+      } catch (error) {
+        if (typeof callback === "function") callback(error, false);
+        console.error(error);
+        return reject(error);
+      }
+    } else {
+      _pattern.forEach((el) => {
+        el.KEYS.forEach((key) => {
+          let m = _prepare(
+            url.match(new RegExp(el.pattern.split("{{KEY}}").join(key), "i"))
+          );
+          if (m) meta[key] = m;
+        });
+      });
+      if (typeof callback === "function") callback(false, meta);
+      return resolve(meta);
+    }
+  });
+};
 
 var _prepare = function (data) {
-    return data ? data[1] : false;
-}
+  return data ? data[1] : false;
+};
 
 module.exports = gmeta;
