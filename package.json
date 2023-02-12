@@ -30,7 +30,7 @@
   "homepage": "https://github.com/jodacame/gmeta#readme",
   "dependencies": {
     "axios": "^0.21.1",
-    "got": "^11.8.2",
+    "got": "^12.5.3",
     "request": "^2.88.2"
   }
 }
