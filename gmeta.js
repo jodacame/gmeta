@@ -7,7 +7,16 @@ const _pattern = require("./patterns");
 var gmeta = function (url, callback, isHTML) {
   return new Promise(async (resolve, reject) => {
     if (!url || url == undefined || url == "undefined") url = "";
+
     if (callback === true) isHTML = true;
+
+    // Check if url is valid  and callback === true
+    if (isHTML !== true && !url.startsWith("http://") && !url.startsWith("https://")) {
+      if (typeof callback === "function")
+        return callback({ error: "Invalid URL", url: url }, false);
+      return reject({ error: "Invalid URL", url: url });
+    }
+
     let meta = {};
     if (!isHTML || isHTML === false) {
       try {
@@ -20,9 +29,7 @@ var gmeta = function (url, callback, isHTML) {
 
         _pattern.forEach((el) => {
           el.KEYS.forEach((key) => {
-            let m = _prepare(
-              head.match(new RegExp(el.pattern.split("{{KEY}}").join(key), "i"))
-            );
+            let m = _prepare(head.match(new RegExp(el.pattern.split("{{KEY}}").join(key), "i")));
             if (m) meta[key] = m;
           });
         });
@@ -30,15 +37,13 @@ var gmeta = function (url, callback, isHTML) {
         return resolve(meta);
       } catch (error) {
         if (typeof callback === "function") callback(error, false);
-        console.error(error);
+        //  console.error(error);
         return reject(error);
       }
     } else {
       _pattern.forEach((el) => {
         el.KEYS.forEach((key) => {
-          let m = _prepare(
-            url.match(new RegExp(el.pattern.split("{{KEY}}").join(key), "i"))
-          );
+          let m = _prepare(url.match(new RegExp(el.pattern.split("{{KEY}}").join(key), "i")));
           if (m) meta[key] = m;
         });
       });
